@@ -1,8 +1,22 @@
 class ChangeTracker
     @create: (obj) ->
-        return Proxy.create(new ChangeTracker(obj))
+        return Proxy.create(new RootChangeTracker(obj))
 
     constructor: (@obj) ->
+
+    getOwnPropertyNames: () ->
+        return Object.getOwnPropertyNames(@obj)
+
+    getOwnPropertyDescriptor: (name) ->
+        return Object.getOwnPropertyDescriptor(@obj, name)
+
+    set: (proxy, name, value) ->
+        @markDirty(name)
+        return @obj[name] = value
+
+class RootChangeTracker extends ChangeTracker
+    constructor: (obj) ->
+        super(obj)
         @_dirty = []
 
     get: (proxy, name) ->
@@ -12,18 +26,15 @@ class ChangeTracker
             val = ChildChangeTracker.create(val, @, name)
         return val
 
-    set: (proxy, name, value) ->
-        @markDirty(name)
-        return @obj[name] = value
-
     markDirty: (field) ->
         @_dirty.push(field) if field not in @_dirty
 
-class ChildChangeTracker
+class ChildChangeTracker extends ChangeTracker
     @create: (obj, parent, field) ->
         return Proxy.create(new ChildChangeTracker(obj, parent, field))
 
-    constructor: (@obj, @parent, @field) ->
+    constructor: (obj, @parent, @field) ->
+        super(obj)
 
     get: (proxy, name) ->
         val = @obj[name]
@@ -31,8 +42,7 @@ class ChildChangeTracker
             val = ChildChangeTracker.create(val, @parent, @field)
         return val
 
-    set: (proxy, name, value) ->
+    markDirty: () ->
         @parent.markDirty(@field)
-        return @obj[name] = value
 
 module.exports = ChangeTracker

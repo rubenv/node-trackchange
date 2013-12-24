@@ -3,14 +3,16 @@ assert = require 'assert'
 ChangeTracker = require '..'
 
 describe 'Noop', ->
-    orig = {
-        test: 123
-        method: () -> return 321
-        deep:
-            test: 456
-            method: () -> return 654
-    }
-    obj = ChangeTracker.create(orig)
+    obj = null
+    beforeEach () ->
+        orig = {
+            test: 123
+            method: () -> return 321
+            deep:
+                test: 456
+                method: () -> return 654
+        }
+        obj = ChangeTracker.create(orig)
 
     it 'Passes through get calls', ->
         assert.equal(obj.test, 123)
@@ -32,4 +34,8 @@ describe 'Noop', ->
         obj.deep.test = 678
         assert.equal(obj.deep.test, 678)
 
-    it 'Can still enumerate properties'
+    it 'Can still enumerate properties', ->
+        assert.deepEqual(Object.keys(obj), ['test', 'method', 'deep'])
+
+    it 'Can still enumerate properties (deep)', ->
+        assert.deepEqual(Object.keys(obj.deep), ['test', 'method'])

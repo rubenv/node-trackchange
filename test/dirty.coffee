@@ -21,3 +21,11 @@ describe 'Dirty', ->
     it 'Tracks dirty members (deep)', ->
         obj.deep.test = 789
         assert.deepEqual(obj._dirty, ['deep'])
+
+    it 'Setting a new property enables change tracking', ->
+        obj.new = 123
+        assert.deepEqual(obj._dirty, ['new'])
+
+    it 'Setting a new property enables change tracking (deep)', ->
+        obj.deep.new = 123
+        assert.deepEqual(obj._dirty, ['deep'])
