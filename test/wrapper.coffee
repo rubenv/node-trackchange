@@ -44,11 +44,11 @@ describe 'Wrapper', ->
 
     it 'Tracks changes', ->
         obj.test()
-        assert.equal(obj._dirty, undefined)
+        assert.equal(obj.__dirty, undefined)
         
-        assert.deepEqual(obj2._dirty, ['initial'])
+        assert.deepEqual(obj2.__dirty, ['initial'])
         obj2.test()
-        assert.deepEqual(obj2._dirty, ['initial', 'field'])
+        assert.deepEqual(obj2.__dirty, ['initial', 'field'])
 
     it 'Tracks changes in constructor', ->
-        assert.deepEqual(obj2._dirty, ['initial'])
+        assert.deepEqual(obj2.__dirty, ['initial'])

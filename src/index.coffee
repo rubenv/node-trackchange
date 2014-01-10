@@ -27,7 +27,8 @@ class RootChangeTracker extends ChangeTracker
         @_dirty = []
 
     get: (proxy, name) ->
-        return @_dirty if name == '_dirty'
+        return @_dirty if name == '__dirty'
+        return @obj if name == '__obj'
         val = @obj[name]
         if typeof val == 'object'
             val = ChildChangeTracker.create(val, @, name)

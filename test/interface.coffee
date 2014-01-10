@@ -13,3 +13,8 @@ describe 'Interface', ->
 
     it 'Creating a change tracker returns an object', ->
         assert.equal(typeof ChangeTracker.create({}), 'object')
+
+    it 'Can access original object', ->
+        obj = {}
+        wrapped = ChangeTracker.create(obj)
+        assert.strictEqual(obj, wrapped.__obj)
