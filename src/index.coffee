@@ -2,6 +2,13 @@ class ChangeTracker
     @create: (obj) ->
         return Proxy.create(new RootChangeTracker(obj))
 
+    @createWrapper: (type) ->
+        return () ->
+            newObj = Object.create(type.prototype)
+            wrapped = ChangeTracker.create(newObj)
+            type.apply(wrapped, arguments)
+            return wrapped
+
     constructor: (@obj) ->
 
     getOwnPropertyNames: () ->
