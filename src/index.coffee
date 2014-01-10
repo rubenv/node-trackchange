@@ -24,10 +24,10 @@ class ChangeTracker
 class RootChangeTracker extends ChangeTracker
     constructor: (obj) ->
         super(obj)
-        @_dirty = []
+        @dirty = []
 
     get: (proxy, name) ->
-        return @_dirty if name == '__dirty'
+        return @dirty if name == '__dirty'
         return @obj if name == '__obj'
         val = @obj[name]
         if typeof val == 'object'
@@ -35,7 +35,7 @@ class RootChangeTracker extends ChangeTracker
         return val
 
     markDirty: (field) ->
-        @_dirty.push(field) if field not in @_dirty
+        @dirty.push(field) if field not in @dirty
 
 class ChildChangeTracker extends ChangeTracker
     @create: (obj, parent, field) ->
