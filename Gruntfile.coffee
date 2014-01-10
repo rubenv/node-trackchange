@@ -6,7 +6,7 @@ module.exports = (grunt) ->
 
     @initConfig
         clean:
-            dist: ['dist']
+            dist: ['lib']
 
         coffee:
             options:
