@@ -52,3 +52,6 @@ describe 'Wrapper', ->
 
     it 'Tracks changes in constructor', ->
         assert.deepEqual(obj2.__dirty, ['initial'])
+
+    it 'Objects created through the wrapper are marked as new', ->
+        assert.equal(obj2.__tracker.new, true)

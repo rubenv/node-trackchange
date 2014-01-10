@@ -1,11 +1,11 @@
 class ChangeTracker
-    @create: (obj) ->
-        return Proxy.create(new RootChangeTracker(obj))
+    @create: (obj, isNew = false) ->
+        return Proxy.create(new RootChangeTracker(obj, isNew))
 
     @createWrapper: (type) ->
         return () ->
             newObj = Object.create(type.prototype)
-            wrapped = ChangeTracker.create(newObj)
+            wrapped = ChangeTracker.create(newObj, true)
             type.apply(wrapped, arguments)
             return wrapped
 
@@ -22,13 +22,15 @@ class ChangeTracker
         return @obj[name] = value
 
 class RootChangeTracker extends ChangeTracker
-    constructor: (obj) ->
+    constructor: (obj, isNew) ->
         super(obj)
         @dirty = []
+        @new = isNew
 
     get: (proxy, name) ->
         return @dirty if name == '__dirty'
         return @obj if name == '__obj'
+        return @ if name == '__tracker'
         val = @obj[name]
         if typeof val == 'object'
             val = ChildChangeTracker.create(val, @, name)
@@ -36,6 +38,12 @@ class RootChangeTracker extends ChangeTracker
 
     markDirty: (field) ->
         @dirty.push(field) if field not in @dirty
+
+    resetDirty: () ->
+        @dirty = []
+
+    resetNew: () ->
+        @new = false
 
 class ChildChangeTracker extends ChangeTracker
     @create: (obj, parent, field) ->
