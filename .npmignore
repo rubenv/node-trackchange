@@ -1,0 +1,7 @@
+.*.swp
+/node_modules
+/src
+/test
+/.travis.yml
+/Gruntfile.coffee
+/.npmignore

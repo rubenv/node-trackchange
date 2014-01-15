@@ -3,6 +3,7 @@ module.exports = (grunt) ->
     @loadNpmTasks('grunt-contrib-coffee')
     @loadNpmTasks('grunt-contrib-watch')
     @loadNpmTasks('grunt-mocha-cli')
+    @loadNpmTasks('grunt-release')
 
     @initConfig
         clean:
