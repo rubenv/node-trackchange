@@ -1,6 +1,6 @@
 # trackchange - Transparent change-tracking using Harmony Proxies.
 
-[![Build Status](https://travis-ci.org/rubenv/trackchange.png?branch=master)](https://travis-ci.org/rubenv/trackchange)
+[![Build Status](https://travis-ci.org/rubenv/node-trackchange.png?branch=master)](https://travis-ci.org/rubenv/node-trackchange)
 
 ## License 
 

@@ -24,6 +24,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/rubenv/trackchange.git"
+    "url": "git://github.com/rubenv/node-trackchange.git"
   }
 }
