@@ -13,6 +13,8 @@ describe 'Wrapper', ->
         test: () ->
             @field = true
 
+        @static: () ->
+
     TestType2 = ChangeTracker.createWrapper(TestType)
         
     beforeEach () ->
@@ -55,3 +57,8 @@ describe 'Wrapper', ->
 
     it 'Objects created through the wrapper are marked as new', ->
         assert.equal(obj2.__tracker.new, true)
+
+    it 'Has a static method', ->
+        assert.equal(typeof TestType.static, 'function')
+        assert.equal(typeof TestType2.static, 'function')
+        assert.equal(TestType2.static, TestType.static)

@@ -3,11 +3,16 @@ class ChangeTracker
         return Proxy.create(new RootChangeTracker(obj, isNew))
 
     @createWrapper: (type) ->
-        return () ->
+        ctor = () ->
             newObj = Object.create(type.prototype)
             wrapped = ChangeTracker.create(newObj, true)
             type.apply(wrapped, arguments)
             return wrapped
+
+        ctor[key] = type[key] for own key of type
+
+        return ctor
+
 
     constructor: (@obj) ->
 
