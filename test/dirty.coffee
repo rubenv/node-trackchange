@@ -29,3 +29,7 @@ describe 'Dirty', ->
     it 'Setting a new property enables change tracking (deep)', ->
         obj.deep.new = 123
         assert.deepEqual(obj.__dirty, ['deep'])
+
+    it 'Does not track double-underscored properties', ->
+        obj.__test = 123
+        assert.deepEqual(obj.__dirty, [])

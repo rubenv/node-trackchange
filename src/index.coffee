@@ -23,7 +23,7 @@ class ChangeTracker
         return Object.getOwnPropertyDescriptor(@obj, name)
 
     set: (proxy, name, value) ->
-        @markDirty(name)
+        @markDirty(name) if name[0] != '_' || name[1] != '_'
         return @obj[name] = value
 
 class RootChangeTracker extends ChangeTracker
