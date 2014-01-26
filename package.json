@@ -1,6 +1,6 @@
 {
   "name": "trackchange",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Transparent change-tracking using Harmony Proxies.",
   "main": "lib/index.js",
   "devDependencies": {
