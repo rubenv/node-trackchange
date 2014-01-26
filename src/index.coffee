@@ -3,12 +3,19 @@ class ChangeTracker
         return Proxy.create(new RootChangeTracker(obj, isNew))
 
     @createWrapper: (type) ->
-        ctor = () ->
+        ctorBody = () ->
             newObj = Object.create(type.prototype)
             wrapped = ChangeTracker.create(newObj, true)
             type.apply(wrapped, arguments)
             return wrapped
 
+        # Convert the constructor to a string and generate it again, to create a named function.
+        stringBody = ctorBody.toString()
+        args = ["type", "ChangeTracker"]
+        ctorGenerator = new Function(args, "return function #{type.name} #{stringBody.substring(9)}")
+        ctor = ctorGenerator(type, ChangeTracker)
+
+        # Inherit type properties
         ctor[key] = type[key] for own key of type
 
         return ctor

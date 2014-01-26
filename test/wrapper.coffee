@@ -62,3 +62,7 @@ describe 'Wrapper', ->
         assert.equal(typeof TestType.static, 'function')
         assert.equal(typeof TestType2.static, 'function')
         assert.equal(TestType2.static, TestType.static)
+
+    it 'Preserves the name property on the class', ->
+        assert.equal(TestType.name, 'TestType')
+        assert.equal(TestType2.name, 'TestType')
