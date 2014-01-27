@@ -66,3 +66,13 @@ describe 'Wrapper', ->
     it 'Preserves the name property on the class', ->
         assert.equal(TestType.name, 'TestType')
         assert.equal(TestType2.name, 'TestType')
+
+    it 'Can hook into object creation', ->
+        calls = 0
+        TestType2 = ChangeTracker.createWrapper TestType, (obj) ->
+            assert.equal(typeof obj, 'object')
+            calls++
+
+        assert.equal(calls, 0)
+        obj = new TestType2()
+        assert.equal(calls, 1)
