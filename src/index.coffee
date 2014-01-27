@@ -5,9 +5,9 @@ class ChangeTracker
     @createWrapper: (type, createFn) ->
         ctorBody = () ->
             newObj = Object.create(type.prototype)
-            createFn(newObj) if createFn
             wrapped = ChangeTracker.create(newObj, true)
             type.apply(wrapped, arguments)
+            createFn(wrapped) if createFn
             return wrapped
 
         # Convert the constructor to a string and generate it again, to create a named function.
