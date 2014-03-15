@@ -2,6 +2,57 @@
 
 [![Build Status](https://travis-ci.org/rubenv/node-trackchange.png?branch=master)](https://travis-ci.org/rubenv/node-trackchange)
 
+## Usage
+Add trackchange to your project:
+
+### Installation (Node.JS)
+```
+npm install --save trackchange
+```
+
+Reference it in your code:
+
+```js
+var ChangeTracker = require('trackchange');
+```
+
+### Running
+Be sure to run node with the `--harmony` flag.
+
+```
+node --harmony myscript.js
+```
+
+### Using in code
+
+```js
+var orig = {
+  test: 123
+};
+ 
+// Create a wrapper that tracks changes.
+var obj = ChangeTracker.create(orig);
+ 
+// No changes initially:
+console.log(obj.__dirty); // -> []
+ 
+// Do things
+orig.test = 1;
+orig.other = true;
+ 
+// Magical change tracking!
+console.log(obj.__dirty); // -> ['test', 'other']
+```
+
+You can even wrap constructors. This ensures that each created instance automatically has change tracking built-in:
+
+```js
+var TestType = ChangeTracker.createWrapper(OrigType);
+ 
+var obj = new TestType();
+console.log(obj.__dirty);
+```
+
 ## License 
 
     (The MIT License)

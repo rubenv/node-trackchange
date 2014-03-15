@@ -27,6 +27,9 @@ class ChangeTracker
     getOwnPropertyNames: () ->
         return Object.getOwnPropertyNames(@obj)
 
+    getPropertyNames: () ->
+        return Object.getPropertyNames(@obj)
+
     getOwnPropertyDescriptor: (name) ->
         return Object.getOwnPropertyDescriptor(@obj, name)
 
