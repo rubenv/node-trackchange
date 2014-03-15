@@ -1,9 +1,9 @@
 module.exports = (grunt) ->
+    @loadNpmTasks('grunt-bump')
     @loadNpmTasks('grunt-contrib-clean')
     @loadNpmTasks('grunt-contrib-coffee')
     @loadNpmTasks('grunt-contrib-watch')
     @loadNpmTasks('grunt-mocha-cli')
-    @loadNpmTasks('grunt-release')
 
     @initConfig
         clean:
@@ -34,6 +34,12 @@ module.exports = (grunt) ->
             spec:
                 options:
                     reporter: 'spec'
+
+        bump:
+            options:
+                files: ['package.json']
+                commitFiles: ['-a']
+                pushTo: 'origin'
 
     @registerTask 'default', ['test']
     @registerTask 'build', ['clean', 'coffee']
